@@ -1,0 +1,59 @@
+--PRATICA JUNCAO DE TABELAS (INNER JOIN, LEFT JOIN, RIGHT JOIN) 
+
+
+create SCHEMA cursodeprogramacao;
+
+CREATE TABLE DISciplinas (
+  id_disciplina SERIAL PRIMARY KEY,
+  nome_disciplina VARCHAR(50) NOT NULL,
+  nome_professor VARCHAR(50) NOT NULL
+ )
+ 
+ DROP TABLE disciplinas
+ 
+ CREATE TABLE cursodeprogramacao.alunos (
+  id_alunos SERIAL PRIMARY KEY,
+  nome_alunos VARCHAR(50) NOT NULL,
+  disciplinas_id INT
+  
+ )
+ alter TABLE cursodeprogramacao.alunos
+ ADD CONSTRAINT fk_id_disciplina FOREIGN KEY(disciplinas_id)
+   REFERENCES cursodeprogramacao.disciplinas (id_disciplina)
+   
+ insert INTO cursodeprogramacao.disciplinas(nome_disciplina, nome_professor)
+ 	VALUES('Banco de dados', 'Maria'),
+    	('Python', 'Aloisio'),
+        ('C++', 'Igor')
+        
+  insert INTO cursodeprogramacao.alunos(nome_alunos, disciplinas_id)
+ 	VALUES('Veronica', 2),
+    	('Joao', 1),
+    	('Tadeu', NULL),
+        ('Pietro', 2),
+    	('Sergio', NULL),
+        ('Clara', 1),
+    	('Juliana', NULL)
+        
+  select * from cursodeprogramacao.alunos
+  
+  select * from cursodeprogramacao.disciplinas
+  --
+  SELECT nome_alunos, nome_disciplina from cursodeprogramacao.alunos INNER JOIN cursodeprogramacao.disciplinas
+  ON cursodeprogramacao.disciplinas.id_disciplina = cursodeprogramacao.alunos.disciplinas_id
+  
+  --
+  SELECT nome_alunos, nome_disciplina from cursodeprogramacao.alunos LEFT JOIN cursodeprogramacao.disciplinas
+  ON cursodeprogramacao.disciplinas.id_disciplina = cursodeprogramacao.alunos.disciplinas_id
+  
+  SELECT nome_alunos, nome_disciplina from cursodeprogramacao.alunos RIGHT JOIN cursodeprogramacao.disciplinas
+  ON cursodeprogramacao.disciplinas.id_disciplina = cursodeprogramacao.alunos.disciplinas_id
+  --
+  
+  SELECT nome_alunos, nome_disciplina from cursodeprogramacao.alunos LEFT JOIN cursodeprogramacao.disciplinas
+  ON cursodeprogramacao.disciplinas.id_disciplina = cursodeprogramacao.alunos.disciplinas_id
+  UNION
+  SELECT nome_alunos, nome_disciplina from cursodeprogramacao.alunos RIGHT JOIN cursodeprogramacao.disciplinas
+  ON cursodeprogramacao.disciplinas.id_disciplina = cursodeprogramacao.alunos.disciplinas_id
+  
+  
